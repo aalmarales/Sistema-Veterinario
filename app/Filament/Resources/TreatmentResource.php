@@ -16,6 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ActionGroup;
+
+use Filament\Tables\Columns\Summarizers\Average;
+use Filament\Tables\Columns\Summarizers\Sum;
+
 //use Illuminate\Database\Eloquent\Model;
 
 class TreatmentResource extends Resource
@@ -85,10 +91,11 @@ class TreatmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('type')
-                    ->searchable(),
+                    ->searchable()
+                    ->description(fn(Treatment $record)=> $record->description),
 
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
+                //Tables\Columns\TextColumn::make('description')
+                    //->wrap(),
 
                 Tables\Columns\TextColumn::make('start_date')
                     ->date(),
@@ -110,22 +117,60 @@ class TreatmentResource extends Resource
                     
                 Tables\Columns\TextColumn::make('user.name')->label('Veterinarian')
                     ->searchable(),
-                    
-                    
+
+                Tables\Columns\TextColumn::make('amount')->summarize([
+                    Average::make()->money('EUR'),
+
+                    Sum::make()->label('Total')->money('EUR'),
+                ]),
+              
+         
             ])
             ->filters([
                 //
             ])
             ->actions([
-               Tables\Actions\ViewAction::make(),
+               
                 //Tables\Actions\EditAction::make(),
                 //Tables\Actions\DeleteAction::make(),
+
+                ActionGroup::make([
+
+                    Tables\Actions\ViewAction::make(),
+
+                    Action::make('Complete')
+                    ->action(function (Treatment $record) {
+                        $record->status = 'completed';
+                        $record->save();
+                    })
+                    ->hidden(fn (Treatment $record) => $record->status === 'completed'),
+
+                Action::make('In Progress...')
+                    ->action(function (Treatment $record) {
+                        $record->status = 'in_progress';
+                        $record->save();
+                    })
+                    ->hidden(fn (Treatment $record) => $record->status === 'in_progress'),
+                    
+                Action::make('Pending')
+                    ->action(function (Treatment $record) {
+                        $record->status = 'pending';
+                        $record->save();
+                    })
+                    ->hidden(fn (Treatment $record) => $record->status === 'pending'),
+                    
+                ])->icon('heroicon-o-cog-6-tooth')->color('warning')->tooltip('Settings'),
+                
+
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+
+            ])->defaultGroup('status');
+            //->groupsOnly();
     }
 
     public static function getRelations(): array

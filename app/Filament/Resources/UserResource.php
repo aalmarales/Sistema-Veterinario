@@ -59,11 +59,25 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+
+                /* Tables\Columns\TextColumn::make('name')
+                    ->searchable(query: function (Builder $query, string $search) {
+                        return $query->where('name', 'like', "%{$search}%");
+                    }, isIndividual: true), */
+
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+
+                /* Tables\Columns\TextColumn::make('email')
+                    ->searchable(isIndividual: true), */
                 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->date()
+                    ->date(),
+
+                //Tables\Columns\TextInputColumn::make('email'),
+                    
+
+                
                     
             ])
             ->filters([

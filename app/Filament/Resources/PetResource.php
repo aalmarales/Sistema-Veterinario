@@ -16,6 +16,14 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 
+
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+
+use Filament\Tables\Actions\ActionGroup;
+
+
+
 //use App\Filament\Clusters\Settings;
 
 class PetResource extends Resource
@@ -99,18 +107,33 @@ class PetResource extends Resource
                 Tables\Columns\TextColumn::make('treatments.type'),
                 Tables\Columns\TextColumn::make('treatments.user.name')->label('Veterinarian')
                     ->searchable(),
+
+                //Tables\Columns\TextColumn::make('cant_treatments')->avg('treatments','amount'),
+                    
                     
                     
                     
                 
             ])
             ->filters([
-                //
+                //Tables\Filters\Filter::make('dog')->query(fn(Builder $q):Builder => $q->where('type','dog'))->toggle(),
+
+                //Tables\Filters\TernaryFilter::make('type'),
+                QueryBuilder::make('My')
+                    ->constraints([
+                         TextConstraint::make('type'), 
+                    ])
+               
+
+                
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])->icon('heroicon-o-cog-6-tooth')->color('warning')->tooltip('Settings'),
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

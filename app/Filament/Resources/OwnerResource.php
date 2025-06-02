@@ -59,15 +59,28 @@ class OwnerResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+
+            ->heading('List Owners')
+            ->description('Manage your owners here.')
+
+            //->striped()
+
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()
+                    ->icon('heroicon-m-envelope')
+                    ->iconColor('warning')
+                    ->copyable(),
+
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('address')
                     ->searchable(),
                
