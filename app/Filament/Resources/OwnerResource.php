@@ -36,6 +36,9 @@ class OwnerResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    //->helperText('The name is here')
+                    //->autofocus()
+                    ->placeholder('The name is here')
                     
                     ->maxLength(255),
                 Forms\Components\TextInput::make('last_name')
@@ -44,15 +47,22 @@ class OwnerResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    //->hint('Forgotten your email? Bad luck.')
                     
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->required()
+                    //->mask('99/99/9999')
                     ->maxLength(255),
+
                 Forms\Components\TextInput::make('address')
                     ->maxLength(255),
+
+                Forms\Components\TextInput::make('domain')
+                    ->prefix('https://')
+                    ->suffix('.com')
             ]);
     }
 
