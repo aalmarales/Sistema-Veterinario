@@ -15,7 +15,11 @@ class ListOwners extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->button()
+                ->icon('heroicon-o-users')
+                ->color('warning')
+                ->tooltip('Create a new owner'),
         ];
     }
 

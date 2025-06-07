@@ -15,7 +15,11 @@ class ListUsers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+            ->button()
+            ->icon('heroicon-o-eye-dropper')
+            ->color('warning')
+            ->tooltip('Create a new veterinarian'),
         ];
     }
 

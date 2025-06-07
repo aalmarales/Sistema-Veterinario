@@ -34,35 +34,47 @@ class OwnerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    //->helperText('The name is here')
-                    //->autofocus()
-                    ->placeholder('The name is here')
-                    
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('last_name')
-                    ->required()
-                    
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    //->hint('Forgotten your email? Bad luck.')
-                    
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->required()
-                    //->mask('99/99/9999')
-                    ->maxLength(255),
 
-                Forms\Components\TextInput::make('address')
-                    ->maxLength(255),
+                Forms\Components\Section::make('Owner Information')
 
-                Forms\Components\TextInput::make('domain')
-                    ->prefix('https://')
-                    ->suffix('.com')
+                    ->description('Fill in the details of the owner')
+                    ->schema([
+
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->placeholder('The name is here')
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('last_name')
+                            ->required()
+                            ->placeholder('The last_name is here')
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->placeholder('The email is here')
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('phone')
+                            ->tel()
+                            ->required()
+                            ->placeholder('The phone is here')
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('address')
+                            ->placeholder('The address is here')
+                            ->maxLength(255),
+
+                    ])
+                    ->columns(2)
+                    ->icon('heroicon-o-users')
+                    ->compact(),
+                    //->collapsed()
+                
+
+                
+                    
             ]);
     }
 
@@ -99,9 +111,15 @@ class OwnerResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+
+                Tables\Actions\ActionGroup::make([
+
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+
+                ])->icon('heroicon-o-cog-6-tooth')->color('warning')->tooltip('Settings'),
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

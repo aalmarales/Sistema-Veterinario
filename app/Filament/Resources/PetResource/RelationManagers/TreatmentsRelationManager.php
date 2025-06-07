@@ -10,87 +10,61 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Filament\Forms\Set;
+use Carbon\Carbon;
+
 
 
 class TreatmentsRelationManager extends RelationManager
 {
     protected static string $relationship = 'treatments';
 
-    protected function getCreatedNotification(): ?Notification
-    {
-        return Notification::make()
-        ->success()
-        ->title('Treatment Created')
-        ->body('The treatment has been created successfully.');
-    }
-
-    
-    
-
-     public function form(Form $form): Form
+      public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('type')
+                    ->options([
+                        'Consulta General' => 'Consulta General',
+                        'Vacunacion' => 'Vacunacion',
+                        'Cirugia' => 'Cirugia',
+                        'Odontologia' => 'Odontologia',
+                        'Urgencia' => 'Urgencia',
+                        'Cardiología' => 'Cardiología',
+                        'Dermatología' => 'Dermatología',
+                        'Diagnóstico por Imagen' => 'Diagnóstico por Imagen',
+                        'Otros' => 'Otros',
+                    ])
+                    ->required(),
+                    
 
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
 
                 Forms\Components\DatePicker::make('start_date')
+                    ->live(onBlur:true)
+                    ->minDate(today())
+                    ->afterStateUpdated(function($state, Set $set){
+                        
+                         return $set('status', Carbon::parse($state)->isToday() ? 'in_progress' : 'pending'); 
+                         
+                    })
                     ->required(),
 
                 Forms\Components\DatePicker::make('end_date')
+                    ->live(onBlur:true)
+                    ->minDate(today())
                     ->required(),
 
-                Forms\Components\Select::make('status')
-                    ->options([
-                        'pending' => 'Pending',
-                        'in_progress' => 'In Progress...',
-                        'completed' => 'Completed',
-                    ])
-                    ->required(),
-
+                Forms\Components\Hidden::make('status'),
+                    //->default('completed'),
                     
-
-                /* Forms\Components\Select::make('pet_id')
-                    ->relationship('pet', 'name')
-                    ->searchable() 
-                    ->preload() 
-                    ->required(),
-
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        
-                        Forms\Components\TextInput::make('email')
-                            ->tel()
-                            ->required()
-                            ->maxLength(255),
-
-                        Forms\Components\TextInput::make('password')
-                            ->password()
-                            ->required()
-                            ->maxLength(255),
-
-                        Forms\Components\TextInput::make('password_confirmation')
-                            ->password()
-                            ->required()
-                            ->same('password'),
-                        
-                        ])
-                    ->required(), */
+                    
                         
                 
                 
-                    Forms\Components\Hidden::make('user_id')
+                Forms\Components\Hidden::make('user_id')
                     ->default(auth()->user()->id),
 
                 Forms\Components\TextInput::make('amount')

@@ -22,6 +22,9 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\Summarizers\Average;
 use Filament\Tables\Columns\Summarizers\Sum;
 
+//use Filament\Forms\Set;
+use Carbon\Carbon;
+
 //use Illuminate\Database\Eloquent\Model;
 
 class TreatmentResource extends Resource
@@ -102,9 +105,18 @@ class TreatmentResource extends Resource
                     
                 Tables\Columns\TextColumn::make('end_date')
                     ->date(),
+                   
                     
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
+                    ->state(function (Treatment $record){
+                        if(Carbon::parse($record->end_date)->isPast())
+                        {
+                            $record->status = 'completed';
+                            $record->save();
+                        } 
+                        return $record->status;
+                    })
                     ->color(fn(string $state) => match($state){
                         'pending' => 'warning',
                         'in_progress' => 'primary',
@@ -118,8 +130,9 @@ class TreatmentResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')->label('Veterinarian')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('amount')->summarize([
-                    Average::make()->money('EUR'),
+                Tables\Columns\TextColumn::make('amount')
+                ->summarize([
+                    //Average::make()->money('EUR'),
 
                     Sum::make()->label('Total')->money('EUR'),
                 ]),
@@ -131,14 +144,15 @@ class TreatmentResource extends Resource
             ])
             ->actions([
                
-                //Tables\Actions\EditAction::make(),
-                //Tables\Actions\DeleteAction::make(),
-
+                
                 ActionGroup::make([
 
                     Tables\Actions\ViewAction::make(),
+                    //Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
 
-                    Action::make('Complete')
+
+                   /*  Action::make('Complete')
                     ->action(function (Treatment $record) {
                         $record->status = 'completed';
                         $record->save();
@@ -157,7 +171,7 @@ class TreatmentResource extends Resource
                         $record->status = 'pending';
                         $record->save();
                     })
-                    ->hidden(fn (Treatment $record) => $record->status === 'pending'),
+                    ->hidden(fn (Treatment $record) => $record->status === 'pending'), */
                     
                 ])->icon('heroicon-o-cog-6-tooth')->color('warning')->tooltip('Settings'),
                 
@@ -169,7 +183,8 @@ class TreatmentResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
 
-            ])->defaultGroup('status');
+            ])
+            ->defaultGroup('status');
             //->groupsOnly();
     }
 

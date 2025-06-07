@@ -19,7 +19,7 @@ class UserChart extends ChartWidget
     {
         $data = Trend::model(User::class)
         ->between(
-            start: now()->subWeek(),
+            start: now()->subMonth(),
             end: now(),
         )
         ->perDay()
@@ -28,7 +28,7 @@ class UserChart extends ChartWidget
     return [
         'datasets' => [
             [
-                'label' => 'Statistik Pet',
+                'label' => 'Statistik Veterinarians',
                 'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
             ],
         ],

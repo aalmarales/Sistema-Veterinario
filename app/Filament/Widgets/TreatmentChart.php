@@ -19,7 +19,7 @@ class TreatmentChart extends ChartWidget
     {
         $data = Trend::model(Treatment::class)
         ->between(
-            start: now()->subWeek(),
+            start: now()->subMonth(),
             end: now(),
         )
         ->perDay()
@@ -28,7 +28,7 @@ class TreatmentChart extends ChartWidget
     return [
         'datasets' => [
             [
-                'label' => 'Statistik Pet',
+                'label' => 'Statistik Treatments',
                 'data' => $data->map(fn (TrendValue $value) => $value->aggregate),
             ],
         ],

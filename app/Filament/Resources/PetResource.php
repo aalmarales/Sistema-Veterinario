@@ -42,47 +42,75 @@ class PetResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
 
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Section::make('Pet Information')
+                    ->description('Fill in the details of the pet')
+                    ->schema([
 
-                Forms\Components\DatePicker::make('birth_date'),
-
-                Forms\Components\TextInput::make('weight')
-                    ->required()
-                    ->numeric()
-                    ->prefix('KG'),
-                    
-                Forms\Components\Select::make('owner_id')
-                    ->relationship('owner', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->createOptionForm([
                         Forms\Components\TextInput::make('name')
                             ->required()
+                            ->placeholder('The name is here')
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('last_name')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('email')
-                            ->email()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('phone')
-                            ->tel()
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('address')
-                            ->maxLength(255),
-                    ])
-                    ->required(),
 
-                Forms\Components\DatePicker::make('registration_date')
-                    ->required(),
+                        Forms\Components\TextInput::make('type')
+                            ->required()
+                            ->placeholder('The type is here')
+                            ->maxLength(255),
+
+                        Forms\Components\DatePicker::make('birth_date'),
+
+                        Forms\Components\TextInput::make('weight')
+                            ->required()
+                            ->placeholder('The weight is here')
+                            ->numeric()
+                            ->prefix('KG'),
+                    
+                        Forms\Components\Select::make('owner_id')
+                            ->relationship('owner', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->createOptionForm([
+
+                                 Forms\Components\Section::make('Owner Information')
+                                    ->description('Fill in the details of the owner')
+                                    ->schema([
+
+                                        Forms\Components\TextInput::make('name')
+                                            ->required()
+                                            ->placeholder('The name is here')
+                                            ->maxLength(255),
+                                        Forms\Components\TextInput::make('last_name')
+                                            ->required()
+                                            ->placeholder('The last_name is here')
+                                            ->maxLength(255),
+                                        Forms\Components\TextInput::make('email')
+                                            ->email()
+                                            ->required()
+                                            ->placeholder('The email is here')
+                                            ->maxLength(255),
+                                        Forms\Components\TextInput::make('phone')
+                                            ->tel()
+                                            ->required()
+                                            ->placeholder('The phone is here')
+                                            ->maxLength(255),
+                                        Forms\Components\TextInput::make('address')
+                                            ->placeholder('The address is here')
+                                            ->maxLength(255),
+                                    ])
+                                    ->columns(2)
+                                    ->icon('heroicon-o-users')
+                                    ->compact(),
+                                
+                    ])
+                        ->required(),
+
+                        Forms\Components\Hidden::make('registration_date')
+                            ->default(today()),
+                    ])
+                    ->columns(2)
+                    ->icon('heroicon-o-heart')
+                    ->compact(),
+                
             ]);
     }
 
@@ -104,6 +132,7 @@ class PetResource extends Resource
                     
                 Tables\Columns\TextColumn::make('registration_date')
                     ->date(),
+
                 Tables\Columns\TextColumn::make('treatments.type'),
                 Tables\Columns\TextColumn::make('treatments.user.name')->label('Veterinarian')
                     ->searchable(),
@@ -139,7 +168,8 @@ class PetResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('registration_date','desc');
     }
 
     public static function getRelations(): array

@@ -21,7 +21,7 @@ class OwnerChart extends ChartWidget
     {
         $data = Trend::model(Owner::class)
         ->between(
-            start: now()->subWeek(),
+            start: now()->subMonth(),
             end: now(),
         )
         ->perDay()

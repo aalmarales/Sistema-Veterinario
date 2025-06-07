@@ -15,7 +15,11 @@ class ListPets extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->button()
+                ->icon('heroicon-o-heart')
+                ->color('warning')
+                ->tooltip('Create a new pet'),
         ];
     }
 

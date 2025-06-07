@@ -19,7 +19,7 @@ class PetChart extends ChartWidget
     {
         $data = Trend::model(Pet::class)
         ->between(
-            start: now()->subWeek(),
+            start: now()->subMonth(),
             end: now(),
         )
         ->perDay()

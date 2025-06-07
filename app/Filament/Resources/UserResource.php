@@ -32,23 +32,46 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                    
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
 
-                Forms\Components\TextInput::make('password_confirmation')
-                    ->password()
-                    ->required()
-                    ->same('password'),
+                Forms\Components\Section::make('Veterinarian Information')
+                ->description('Fill in the details of the veterinarian')
+
+                ->schema([
+
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->placeholder('The name is here')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('email')
+                        ->email()
+                        ->required()
+                        ->placeholder('The email is here')
+                        ->maxLength(255),
+                    
+                    Forms\Components\TextInput::make('password')
+                        ->password()
+                        ->required()
+                        ->placeholder('The password is here')
+                        ->maxLength(255),
+
+                    Forms\Components\TextInput::make('password_confirmation')
+                        ->password()
+                        ->required()
+                        ->placeholder('The password_confirmation is here')
+                        ->same('password'),
+
+                    Forms\Components\TextInput::make('otro')
+                        ->hintAction(
+                            Forms\Components\Actions\Action::make('cost')
+                                ->requiresConfirmation()
+                        )
+                ])
+                ->columns(2)
+                ->icon('heroicon-o-eye-dropper')
+                ->compact(),
+                
+
+                
                 
             ]);
     }
@@ -84,7 +107,12 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+
+                Tables\Actions\ActionGroup::make([
+
+                    Tables\Actions\ViewAction::make(),
+                ])->icon('heroicon-o-cog-6-tooth')->color('warning')->tooltip('Settings'),
+                //Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
