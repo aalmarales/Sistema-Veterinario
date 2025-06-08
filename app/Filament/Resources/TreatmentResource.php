@@ -213,14 +213,20 @@ class TreatmentResource extends Resource
     {
             return $infolist
                 ->schema([
-                Infolists\Components\TextEntry::make('type'),
-                Infolists\Components\TextEntry::make('description'),
-                Infolists\Components\TextEntry::make('start_date'),
-                Infolists\Components\TextEntry::make('end_date'),
-                Infolists\Components\TextEntry::make('status'),
-                Infolists\Components\TextEntry::make('pet.name'),
-                Infolists\Components\TextEntry::make('user.name')->label('Veterinarian'),
-                Infolists\Components\TextEntry::make('amount'),
+
+                    Infolists\Components\Section::make('Treatments Information')
+                        ->schema([
+
+                            Infolists\Components\TextEntry::make('type')->badge(),
+                            Infolists\Components\TextEntry::make('description')->badge(),
+                            Infolists\Components\TextEntry::make('start_date')->badge(),
+                            Infolists\Components\TextEntry::make('end_date')->badge(),
+                            Infolists\Components\TextEntry::make('status')->badge(),
+                            Infolists\Components\TextEntry::make('pet.name')->badge(),
+                            Infolists\Components\TextEntry::make('user.name')->label('Veterinarian')->badge(),
+                            Infolists\Components\TextEntry::make('amount')->badge(),
+                
+                        ])->columns(2),
                 
                      ]);
     }

@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Actions\Action;
+
 //use App\Filament\Clusters\Settings;
 
 class OwnerResource extends Resource
@@ -34,6 +37,8 @@ class OwnerResource extends Resource
     {
         return $form
             ->schema([
+
+                
 
                 Forms\Components\Section::make('Owner Information')
 
@@ -65,6 +70,12 @@ class OwnerResource extends Resource
                         Forms\Components\TextInput::make('address')
                             ->placeholder('The address is here')
                             ->maxLength(255),
+
+                        Actions::make([
+                            Action::make('send any'),
+                        ]),
+
+                        
 
                     ])
                     ->columns(2)
@@ -118,6 +129,8 @@ class OwnerResource extends Resource
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
 
+                    Tables\Actions\Action::make('send information')->icon('heroicon-o-envelope'),
+
                 ])->icon('heroicon-o-cog-6-tooth')->color('warning')->tooltip('Settings'),
                 
             ])
@@ -153,11 +166,15 @@ class OwnerResource extends Resource
     {
             return $infolist
                 ->schema([
-                Infolists\Components\TextEntry::make('name'),
-                Infolists\Components\TextEntry::make('email'),
-                Infolists\Components\TextEntry::make('phone'),
-                Infolists\Components\TextEntry::make('address'),
+                     Infolists\Components\Section::make('Owner Information')
+                        ->schema([
+                            Infolists\Components\TextEntry::make('name')->badge(),
+                            Infolists\Components\TextEntry::make('email')->badge(),
+                            Infolists\Components\TextEntry::make('phone')->badge(),
+                            Infolists\Components\TextEntry::make('address')->badge(),
                     
+                        ])->columns(2),
+                
             ]);
     }
 

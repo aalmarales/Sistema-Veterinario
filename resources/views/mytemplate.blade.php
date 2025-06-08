@@ -25,7 +25,9 @@
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
 
-            <a href="{{ url('/admin') }}" class="cta-button" target="_blank">Administración</a>
+            <a href="{{ url('/app') }}" class="cta-button" target="_blank">Session</a>
+
+            <a href="{{ url('/admin') }}" class="cta-button" target="_blank">Admin</a>
 
             <div class="menu-toggle">
                 <i class="fas fa-bars"></i>

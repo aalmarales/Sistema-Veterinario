@@ -197,16 +197,21 @@ class PetResource extends Resource
     {
             return $infolist
                 ->schema([
-                Infolists\Components\TextEntry::make('name'),
-                Infolists\Components\TextEntry::make('type'),
-                Infolists\Components\TextEntry::make('birth_date'),
-                Infolists\Components\TextEntry::make('weight'),
-                Infolists\Components\TextEntry::make('owner.name'),
-                Infolists\Components\TextEntry::make('registration_date'),
-                Infolists\Components\TextEntry::make('treatments.type'),
-                Infolists\Components\TextEntry::make('treatments.user.name')->label('Veterinarian'),
+
+                    Infolists\Components\Section::make('Pet Information')
+                    ->schema([
+
+                        Infolists\Components\TextEntry::make('name')->badge(),
+                        Infolists\Components\TextEntry::make('type')->badge(),
+                        Infolists\Components\TextEntry::make('birth_date')->badge(),
+                        Infolists\Components\TextEntry::make('weight')->badge(),
+                        Infolists\Components\TextEntry::make('owner.name')->badge(),
+                        Infolists\Components\TextEntry::make('registration_date')->badge(),
+                        Infolists\Components\TextEntry::make('treatments.type')->badge(),
+                        Infolists\Components\TextEntry::make('treatments.user.name')->label('Veterinarian')->badge(),
+                        
+                    ])->columns(2),
                 
-                
-                     ]);
+                 ]);
     }
 }

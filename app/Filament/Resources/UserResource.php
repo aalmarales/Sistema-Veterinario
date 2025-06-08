@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 
+use Illuminate\Support\Str;
+
+
+
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -42,6 +46,7 @@ class UserResource extends Resource
                         ->required()
                         ->placeholder('The name is here')
                         ->maxLength(255),
+
                     Forms\Components\TextInput::make('email')
                         ->email()
                         ->required()
@@ -60,11 +65,23 @@ class UserResource extends Resource
                         ->placeholder('The password_confirmation is here')
                         ->same('password'),
 
-                    Forms\Components\TextInput::make('otro')
-                        ->hintAction(
-                            Forms\Components\Actions\Action::make('cost')
-                                ->requiresConfirmation()
-                        )
+                    
+
+                    /* Forms\Components\Checkbox::make('company')
+                        ->live(),
+
+                    Forms\Components\TextInput::make('mostrar')
+                        ->visible(fn(Forms\Get $get) => $get('company')), */
+                        
+
+
+                    /* Forms\Components\TextInput::make('estado')
+                        ->live(onBlur:true)
+                        ->afterStateUpdated(fn($state, Forms\Set $set) => $set('copia', Str::slug($state))),
+
+                    Forms\Components\TextInput::make('copia'), */
+
+                    
                 ])
                 ->columns(2)
                 ->icon('heroicon-o-eye-dropper')
@@ -97,6 +114,8 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->date(),
 
+                
+
                 //Tables\Columns\TextInputColumn::make('email'),
                     
 
@@ -111,6 +130,7 @@ class UserResource extends Resource
                 Tables\Actions\ActionGroup::make([
 
                     Tables\Actions\ViewAction::make(),
+
                 ])->icon('heroicon-o-cog-6-tooth')->color('warning')->tooltip('Settings'),
                 //Tables\Actions\EditAction::make(),
             ])
@@ -146,9 +166,15 @@ class UserResource extends Resource
     {
             return $infolist
                 ->schema([
-                Infolists\Components\TextEntry::make('name'),
-                Infolists\Components\TextEntry::make('email'),
-                Infolists\Components\TextEntry::make('created_at')->date(),
+
+                    Infolists\Components\Section::make('Veterinarian Information')
+                        ->schema([
+
+                            Infolists\Components\TextEntry::make('name')->badge(),
+                            Infolists\Components\TextEntry::make('email')->badge(),
+                            Infolists\Components\TextEntry::make('created_at')->date()->badge(),
+                        ])->columns(2),
+                
                 /* Infolists\Components\TextEntry::make('weight'),
                 Infolists\Components\TextEntry::make('owner.name'),
                 Infolists\Components\TextEntry::make('registration_date'),

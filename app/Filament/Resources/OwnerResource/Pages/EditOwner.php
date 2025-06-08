@@ -8,6 +8,8 @@ use Filament\Resources\Pages\EditRecord;
 
 use Filament\Notifications\Notification;
 
+use Filament\Actions\Action;
+
 class EditOwner extends EditRecord
 {
     protected static string $resource = OwnerResource::class;
@@ -16,6 +18,8 @@ class EditOwner extends EditRecord
     {
         return [
             Actions\DeleteAction::make(),
+
+            Action::make('send email'),
         ];
     }
 
