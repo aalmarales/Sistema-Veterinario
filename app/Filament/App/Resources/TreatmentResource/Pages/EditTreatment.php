@@ -29,6 +29,7 @@ class EditTreatment extends EditRecord
             return Notification::make()
                 ->success()
                 ->title('Pet updated')
-                ->body('The pet has been updated successfully.');
+                ->body('The pet has been updated successfully.')
+                ->sendToDatabase(auth()->user());
     }
 }

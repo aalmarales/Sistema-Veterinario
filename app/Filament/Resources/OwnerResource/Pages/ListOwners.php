@@ -7,7 +7,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 use App\Filament\Widgets\OwnerOverview;
-use Filament\Actions\Action;
+
 
 class ListOwners extends ListRecords
 {
@@ -20,10 +20,13 @@ class ListOwners extends ListRecords
                 ->button()
                 ->icon('heroicon-o-users')
                 ->color('warning')
-                ->tooltip('Create a new owner'),
+                ->tooltip('Create a new owner')
+                //->iconButton(),
 
-            Action::make('send google')
-                ->url('https://google.com'),
+            /* Actions\Action::make('send google')
+                ->url('https://google.com')
+                ->icon('heroicon-o-globe-alt')
+                ->iconButton(), */
         ];
     }
 

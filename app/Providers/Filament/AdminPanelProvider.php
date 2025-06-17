@@ -40,12 +40,14 @@ class AdminPanelProvider extends PanelProvider
             //->brandName('ADMINISTRATOR PANEL')
             ->brandLogo(asset('favicon.svg'))
             ->brandLogoHeight('3rem')
+
+            ->databaseNotifications()
             
             ->colors([
-                'primary' => Color::Red,
+                'primary' => Color::Yellow,
             ])
 
-            //->databaseNotifications()
+            ->databaseNotifications()
 
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             

@@ -92,10 +92,13 @@ class TreatmentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->heading('List Treatments')
+            ->description('Manage your treatments here.')
+
             ->columns([
                 Tables\Columns\TextColumn::make('type')
                     ->searchable()
-                    ->description(fn(Treatment $record)=> $record->description),
+                    ->description(fn(Treatment $record) => $record->description),
 
                 //Tables\Columns\TextColumn::make('description')
                     //->wrap(),
@@ -109,17 +112,23 @@ class TreatmentResource extends Resource
                     
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->state(function (Treatment $record){
+                    ->state(function (Treatment $record)
+                    {
                         if(Carbon::parse($record->end_date)->isPast())
                         {
                             $record->status = 'completed';
+                            $record->save();
+                        }
+                        else if(Carbon::parse($record->start_date)->isPast())
+                        {
+                            $record->status = 'in_progress';
                             $record->save();
                         } 
                         return $record->status;
                     })
                     ->color(fn(string $state) => match($state){
-                        'pending' => 'warning',
-                        'in_progress' => 'primary',
+                        'pending' => 'danger',
+                        'in_progress' => 'warning',
                         'completed' => 'success',
                         
                     })
@@ -183,8 +192,7 @@ class TreatmentResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
 
-            ])
-            ->defaultGroup('status');
+            ])->defaultGroup('status');
             //->groupsOnly();
     }
 

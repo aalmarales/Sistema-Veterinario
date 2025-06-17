@@ -18,6 +18,13 @@ use Filament\Infolists\Infolist;
 
 use Illuminate\Support\Str;
 
+use Filament\Tables\Actions\ImportAction;
+use App\Filament\Imports\UserImporter;
+
+use App\Filament\Exports\UserExporter;
+use Filament\Tables\Actions\ExportAction;
+
+
 
 
 class UserResource extends Resource
@@ -96,6 +103,17 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->heading('List Veterinarians')
+            ->description('Manage your veterinarians here.')
+
+            ->headerActions([
+                ImportAction::make()
+                    ->importer(UserImporter::class),
+
+                ExportAction::make()
+                    ->exporter(UserExporter::class),
+            ])
+
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
@@ -126,6 +144,8 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+
+
 
                 Tables\Actions\ActionGroup::make([
 

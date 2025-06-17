@@ -12,6 +12,8 @@ use App\Models\Pet;
 class PetChart extends ChartWidget
 {
     protected static ?string $heading = 'Pet-Chart';
+    
+    protected static string $color = 'warning';
 
     public ?string $filter = 'today';
 
@@ -49,5 +51,10 @@ class PetChart extends ChartWidget
             'month' => 'Last month',
             'year' => 'This year',
         ];
+    }
+
+    public function getDescription(): ?string
+    {
+        return 'Behavior of the pets';
     }
 }

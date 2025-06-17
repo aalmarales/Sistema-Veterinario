@@ -6,7 +6,7 @@ use App\Filament\App\Resources\TreatmentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-use App\Filament\Widgets\TreatmentOverview;
+use App\Filament\App\Widgets\PersonalTreatmentOverview;
 
 class ListTreatments extends ListRecords
 {
@@ -22,7 +22,7 @@ class ListTreatments extends ListRecords
     protected  function getHeaderWidgets(): array
     {
         return [
-           //TreatmentOverview::class,
+           PersonalTreatmentOverview::class,
         ];
     }
 }

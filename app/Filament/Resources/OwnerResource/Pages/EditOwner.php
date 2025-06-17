@@ -19,7 +19,7 @@ class EditOwner extends EditRecord
         return [
             Actions\DeleteAction::make(),
 
-            Action::make('send email'),
+            //Action::make('send email'),
         ];
     }
 
@@ -33,6 +33,7 @@ class EditOwner extends EditRecord
             return Notification::make()
                 ->success()
                 ->title('Owner updated')
-                ->body('The owner has been updated successfully.');
+                ->body('The owner has been updated successfully.')
+                ->sendToDatabase(auth()->user());
     }
 }

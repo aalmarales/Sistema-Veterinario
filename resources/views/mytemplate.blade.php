@@ -23,11 +23,12 @@
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#equipo">Equipo</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <li><a href="{{ url('/admin') }}" target="_blank">Admin</a></li>
             </ul>
 
             <a href="{{ url('/app') }}" class="cta-button" target="_blank">Session</a>
 
-            <a href="{{ url('/admin') }}" class="cta-button" target="_blank">Admin</a>
+           
 
             <div class="menu-toggle">
                 <i class="fas fa-bars"></i>

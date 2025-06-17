@@ -17,11 +17,12 @@ class CreatePet extends CreateRecord
         return Notification::make()
         ->success()
         ->title('Pet Created')
-        ->body('The pet has been created successfully.');
+        ->body('The pet has been created successfully.')
+        ->sendToDatabase(auth()->user());
     }
 
-   /*  protected function getRedirectUrl(): string
+    protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
-    } */
+    }
 }

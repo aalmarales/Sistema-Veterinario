@@ -22,6 +22,9 @@ use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 
 use Filament\Tables\Actions\ActionGroup;
 
+use App\Filament\Imports\PetImporter;
+use Filament\Tables\Actions\ImportAction;
+
 
 
 //use App\Filament\Clusters\Settings;
@@ -117,6 +120,15 @@ class PetResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+
+            ->heading('List Pets')
+            ->description('Manage your pets here.')
+
+            ->headerActions([
+                ImportAction::make()
+                    ->importer(PetImporter::class),
+            ])
+
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
@@ -148,10 +160,8 @@ class PetResource extends Resource
                 //Tables\Filters\Filter::make('dog')->query(fn(Builder $q):Builder => $q->where('type','dog'))->toggle(),
 
                 //Tables\Filters\TernaryFilter::make('type'),
-                QueryBuilder::make('My')
-                    ->constraints([
-                         TextConstraint::make('type'), 
-                    ])
+                /* 
+                 */
                
 
                 

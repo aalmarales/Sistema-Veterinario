@@ -17,7 +17,8 @@ class CreateUser extends CreateRecord
         return Notification::make()
         ->success()
         ->title('Veterinarian Created')
-        ->body('The veterinarian has been created successfully.');
+        ->body('The veterinarian has been created successfully.')
+        ->sendToDatabase(auth()->user());
     }
 
     protected function getRedirectUrl(): string

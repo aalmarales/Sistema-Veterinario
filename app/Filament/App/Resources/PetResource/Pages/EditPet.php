@@ -19,17 +19,18 @@ class EditPet extends EditRecord
         ];
     }
 
-    /* protected function getRedirectUrl(): string
+    protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
-    } */
+    }
 
     protected function getSavedNotification(): ?Notification
     {
             return Notification::make()
                 ->success()
                 ->title('Pet updated')
-                ->body('The pet has been updated successfully.');
+                ->body('The pet has been updated successfully.')
+                ->sendToDatabase(auth()->user());
     }
 
 }

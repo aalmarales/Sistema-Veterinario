@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('mytemplate');
 })->name('home');
 
+Route::get('/otro', function () {
+    return view('otro_template');
+})->name('otro');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

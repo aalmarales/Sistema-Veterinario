@@ -13,6 +13,8 @@ class TreatmentChart extends ChartWidget
 {
     protected static ?string $heading = 'Treatment-Chart';
 
+    protected static string $color = 'warning';
+
     public ?string $filter = 'today';
 
     protected function getData(): array
@@ -49,5 +51,10 @@ class TreatmentChart extends ChartWidget
             'month' => 'Last month',
             'year' => 'This year',
         ];
+    }
+
+    public function getDescription(): ?string
+    {
+        return 'Behavior of the treatments';
     }
 }

@@ -18,6 +18,15 @@ use Filament\Infolists\Infolist;
 
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\TextInput;
+
+use Filament\Forms\Components\Select;
+
+use App\Filament\Imports\OwnerImporter;
+use Filament\Tables\Actions\ImportAction;
+
+use App\Filament\Exports\OwnerExporter;
+use Filament\Tables\Actions\ExportAction;
 
 //use App\Filament\Clusters\Settings;
 
@@ -37,8 +46,6 @@ class OwnerResource extends Resource
     {
         return $form
             ->schema([
-
-                
 
                 Forms\Components\Section::make('Owner Information')
 
@@ -71,22 +78,21 @@ class OwnerResource extends Resource
                             ->placeholder('The address is here')
                             ->maxLength(255),
 
-                        Actions::make([
-                            Action::make('send any'),
-                        ]),
+                        /* Actions::make([
+                            Action::make('send any'), */
+                        ])->columns(2)
+                        ->icon('heroicon-o-users')
+                        ->compact(),
+                        //->collapsed()
 
                         
-
-                    ])
-                    ->columns(2)
-                    ->icon('heroicon-o-users')
-                    ->compact(),
-                    //->collapsed()
+                        ]);
+                    
                 
 
                 
                     
-            ]);
+                    
     }
 
     public static function table(Table $table): Table
@@ -95,6 +101,19 @@ class OwnerResource extends Resource
 
             ->heading('List Owners')
             ->description('Manage your owners here.')
+
+            ->headerActions([
+                ImportAction::make()
+                    ->importer(OwnerImporter::class)
+                    ->maxRows(500),
+
+                ExportAction::make()
+                    ->exporter(OwnerExporter::class)
+                    //->columnMapping(false),
+                    /* ->options([
+                        'updateExisting' => true,
+                    ]), */
+            ])
 
             //->striped()
 
@@ -127,9 +146,29 @@ class OwnerResource extends Resource
 
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
 
-                    Tables\Actions\Action::make('send information')->icon('heroicon-o-envelope'),
+                    Tables\Actions\DeleteAction::make(),
+                        //->modalIcon('heroicon-o-cursor-arrow-rays'),
+
+                    /* Tables\Actions\Action::make('send information')
+                        ->icon('heroicon-o-envelope')
+                        ->requiresConfirmation(), */
+
+                
+                    /* Tables\Actions\Action::make('update')
+                        ->form([
+                           TextInput::make('name'),
+                           TextInput::make('email'),
+                            ])
+                        ->fillForm(fn(Owner $record): array =>[
+                            'name' => $record->name,
+                            'email' => $record->email,
+                        ])
+                        ->disabledForm()
+                        ->modalIcon('heroicon-o-trash')
+                        ->modalIconColor('warning'),
+                        //->modalCancelAction(false),
+                        //->modalHeading('luludfgg0'), */
 
                 ])->icon('heroicon-o-cog-6-tooth')->color('warning')->tooltip('Settings'),
                 

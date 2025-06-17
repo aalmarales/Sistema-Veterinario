@@ -12,7 +12,7 @@ class CreateTreatment extends CreateRecord
 {
     protected static string $resource = TreatmentResource::class;
 
-    protected function getCreatedNotification(): ?Notification
+    /* protected function getCreatedNotification(): ?Notification
     {
         return Notification::make()
         ->success()
@@ -23,5 +23,5 @@ class CreateTreatment extends CreateRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
-    }
+    } */
 }

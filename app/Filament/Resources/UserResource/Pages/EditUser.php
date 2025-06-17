@@ -29,6 +29,7 @@ class EditUser extends EditRecord
             return Notification::make()
                 ->success()
                 ->title('Veterinarian updated')
-                ->body('The veterinarian has been updated successfully.');
+                ->body('The veterinarian has been updated successfully.')
+                ->sendToDatabase(auth()->user());
     }
 }

@@ -33,18 +33,23 @@ class AppPanelProvider extends PanelProvider
             ->emailVerification()
             ->profile()
 
+            ->brandLogo(asset('favicon.svg'))
+            ->brandLogoHeight('3rem')
+
+             ->databaseNotifications()
+
             ->colors([
-                'primary' => Color::Red,
+                'primary' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                //Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                /* Widgets\AccountWidget::class,
+                Widgets\FilamentInfoWidget::class, */
             ])
             ->middleware([
                 EncryptCookies::class,

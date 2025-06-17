@@ -6,7 +6,7 @@ use App\Filament\App\Resources\PetResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-use App\Filament\Widgets\PetOverview;
+use App\Filament\App\Widgets\PersonalPetOverview;
 
 class ListPets extends ListRecords
 {
@@ -15,14 +15,18 @@ class ListPets extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->button()
+                ->icon('heroicon-o-heart')
+                ->color('primary')
+                ->tooltip('Create a new pet'),
         ];
     }
 
     protected  function getHeaderWidgets(): array
     {
         return [
-           //PetOverview::class,
+           PersonalPetOverview::class,
         ];
     }
 }
