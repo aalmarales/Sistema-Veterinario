@@ -12,6 +12,7 @@ class EditOwner extends EditRecord
 {
     protected static string $resource = OwnerResource::class;
 
+
     protected function getHeaderActions(): array
     {
         return [

@@ -28,6 +28,10 @@ use Filament\Tables\Actions\ImportAction;
 use App\Filament\Exports\OwnerExporter;
 use Filament\Tables\Actions\ExportAction;
 
+//use Illuminate\Support\Facades\Auth;
+
+//use Illuminate\Validation\Rules\File;
+
 //use App\Filament\Clusters\Settings;
 
 class OwnerResource extends Resource
@@ -106,9 +110,17 @@ class OwnerResource extends Resource
                 ImportAction::make()
                     ->importer(OwnerImporter::class)
                     ->maxRows(500),
+                    /* ->fileRules([
+                        File::types(['xlsx',
+                        'xls',
+                        'csv',
+                        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                        'application/vnd.ms-excel',
+                        'text/csv',])->max(1024 * 10),
+                    ]), */
 
                 ExportAction::make()
-                    ->exporter(OwnerExporter::class)
+                    ->exporter(OwnerExporter::class),
                     //->columnMapping(false),
                     /* ->options([
                         'updateExisting' => true,
@@ -177,7 +189,7 @@ class OwnerResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
@@ -189,6 +201,16 @@ class OwnerResource extends Resource
 
     public static function getPages(): array
     {
+        /* dd(request()->cookie(config('session.cookie').'_id'),
+            session()->getId()); */
+            //dd(request()->user());
+        //dd(auth()->user());
+        /* if(auth()->user()->hasRole('invitado')){
+            return [
+                'index' => Pages\ListOwners::route('/'),
+            ];
+        } */
+        
         return [
             'index' => Pages\ListOwners::route('/'),
             'create' => Pages\CreateOwner::route('/create'),

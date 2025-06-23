@@ -19,6 +19,16 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 
+use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
+
+use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+
+use App\Http\Middleware\IsSuperAdmin;
+
+use Shanerbaner82\PanelRoles\PanelRoles;
+
+
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -30,10 +40,10 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
 
             ->login()
-            ->registration()
+            //->registration()
             
-            ->passwordReset()
-            ->emailVerification()
+            //->passwordReset()
+            //->emailVerification()
             ->profile()
 
             //->font('Poppins')
@@ -48,6 +58,17 @@ class AdminPanelProvider extends PanelProvider
             ])
 
             ->databaseNotifications()
+
+            ->plugins([
+
+                  FilamentBackgroundsPlugin::make(),
+
+                  FilamentSpatieRolesPermissionsPlugin::make(),
+                  
+                  PanelRoles::make()
+                    ->roleToAssign('Super Admin')
+                    ->restrictedRoles(['Super Admin']),
+                  ])
 
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             
@@ -75,9 +96,11 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                
             ])
             ->authMiddleware([
                 Authenticate::class,
+                //IsSuperAdmin::class,
             ]);
     }
 }

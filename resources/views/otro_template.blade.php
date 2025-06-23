@@ -21,6 +21,7 @@
             <li><a href="#servicios">Servicios</a></li>
             <li><a href="#galeria">Galería</a></li>
             <li><a href="#contacto">Contacto</a></li>
+            <li><a href="{{ url('/admin') }}" target="_blank">Admin</a></li>
         </ul>
         <div class="menu-toggle">
             <i class="fas fa-bars"></i>
@@ -34,10 +35,10 @@
         <div class="blob"></div>
         <div class="hero-content fade-in">
             <h1>Donde la naturaleza <br>se encuentra con la ciencia.</h1>
-            <p class="delay-1">Una nueva forma de cuidar a tus mascotas. Medicina avanzada en un entorno natural.</p>
+            <p class="delay-1"><strong>Una nueva forma de cuidar a tus mascotas. Medicina avanzada en un entorno natural.</strong></p>
             <div class="delay-2">
-                <a href="#contacto" class="btn">Reservar cita</a>
-                <a href="#servicios" class="btn btn-outline">Explorar</a>
+                <a href="{{ url('/app') }}" class="btn" target="_blank">Session</a>
+                <a href="#" class="btn btn-outline" >Reservar cita</a>
             </div>
         </div>
     </section>

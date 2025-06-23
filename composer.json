@@ -7,13 +7,19 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "althinect/filament-spatie-roles-permissions": "^2.3",
+        "bezhansalleh/filament-panel-switch": "^1.1",
         "filament/filament": "^3.3",
         "flowframe/laravel-trend": "^0.4.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.1.1",
         "livewire/volt": "^1.7.0",
-        "symfony/console": "^7.0"
+        "shanerbaner82/panel-roles": "^0.0.3",
+        "swisnl/filament-backgrounds": "^1.1",
+        "symfony/console": "^7.0",
+        "symfony/http-client": "^7.3",
+        "symfony/mailgun-mailer": "^7.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

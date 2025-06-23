@@ -3,18 +3,27 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+//use App\Models\User;
+
 /* Route::get('/', function () {
     return view('welcome');
 })->name('home'); */
 
 
 Route::get('/', function () {
-    return view('mytemplate');
+    return view('otro_template');
 })->name('home');
 
-Route::get('/otro', function () {
-    return view('otro_template');
-})->name('otro');
+/* Route::get('/ej', function () {
+
+    //$rol = auth()->user()->getRoleNames();
+
+    //return var_dump($rol);
+    //return response()->json($rol);
+    
+
+    return auth()->user()->hasRole('veterinarian')  ? response()->json('ok'): response()->json('no');
+}); */
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

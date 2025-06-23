@@ -17,6 +17,7 @@ use Filament\Infolists;
 use Filament\Infolists\Infolist;
 
 
+
 class OwnerResource extends Resource
 {
     protected static ?string $model = Owner::class;
@@ -31,11 +32,14 @@ class OwnerResource extends Resource
     
     public static function getEloquentQuery(): Builder
 {
-    return parent::getEloquentQuery()->whereHas('pets', function(Builder $query){
+    return parent::getEloquentQuery()->whereHas('pets.treatments', function(Builder $query){
+        $query->where('user_id', auth()->user()->id);
+    });
+    /* return parent::getEloquentQuery()->whereHas('pets', function(Builder $query){
         $query->whereHas('treatments',function(Builder $q){
             $q->where('user_id', auth()->user()->id);
         });
-    });
+    }); */
 }
     
 
@@ -177,6 +181,7 @@ class OwnerResource extends Resource
 
     public static function getPages(): array
     {
+        
         return [
             'index' => Pages\ListOwners::route('/'),
             'create' => Pages\CreateOwner::route('/create'),
@@ -186,11 +191,15 @@ class OwnerResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::whereHas('pets', function (Builder $query) {
+
+        return static::getModel()::whereHas('pets.treatments', function(Builder $q){
+            $q->where('user_id', auth()->user()->id);
+        })->count();
+        /* return static::getModel()::whereHas('pets', function (Builder $query) {
             $query->whereHas('treatments', function (Builder $q) {
                 $q->where('user_id', auth()->user()->id);
             });
-        })->count();
+        })->count(); */
     }
 
         public static function infolist(Infolist $infolist): Infolist

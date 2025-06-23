@@ -72,6 +72,12 @@ class UserResource extends Resource
                         ->placeholder('The password_confirmation is here')
                         ->same('password'),
 
+                    Forms\Components\Select::make('roles')
+                        ->multiple()
+                        ->relationship('roles', 'name')
+                        ->preload(),
+                        
+
                     
 
                     /* Forms\Components\Checkbox::make('company')

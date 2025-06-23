@@ -10,6 +10,8 @@ use App\Filament\Widgets\TreatmentChart;
 use App\Filament\Widgets\UserChart;
 
 
+
+
 class DashboardNew extends Page                 //\Filament\Pages\Dashboard
 {
     protected static ?string $navigationIcon = 'heroicon-o-home-modern';
@@ -36,6 +38,7 @@ class DashboardNew extends Page                 //\Filament\Pages\Dashboard
             PetChart::class,
             TreatmentChart::class,
             UserChart::class,
+           
 
         ];
     }
